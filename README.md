@@ -13,3 +13,8 @@ Files:
 4. Does PCA
 5. Does Classification Model
 6. Prints Accuracy and Classification Report
+7. saves the PCA, Scaler, and Model
+
+#TestModel.py
+1. loads the Model
+2. Makes predictions on new data
