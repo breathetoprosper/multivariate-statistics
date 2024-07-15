@@ -1,3 +1,8 @@
+# How to use this, where marked: 
+# 1-2: PUT THE NAME OF THE DATABASE
+# 2-2: PUT THE NAME OF THE TABLE
+# so that you can retrieve the table.
+
 import pandas as pd
 from sqlalchemy import create_engine
 
@@ -6,7 +11,7 @@ db_config = {
     'host': '127.0.0.1',
     'user': 'root',         # Your MySQL username
     'password': '',         # Your MySQL password (empty by default in XAMPP)
-    'database': 'database_1'  # Your database name
+    'database': 'database_2'  # 1-2: PUT THE NAME OF THE DATABASE HERE!!!
 }
 
 def get_dataframe():
@@ -20,8 +25,11 @@ def get_dataframe():
         # Create a SQLAlchemy engine
         engine = create_engine(f"mysql+mysqlconnector://{db_config['user']}:{db_config['password']}@{db_config['host']}/{db_config['database']}")
 
+        # 2-2: PUT THE NAME OF THE TABLE HERE!!!
+        table_name = 'banknote_authentication'
+
         # Define your SQL query
-        query = "SELECT * FROM biplot;"  # Ensure 'biplot' is the correct table name
+        query = f"SELECT * FROM {table_name};"
 
         # Load data into a Pandas DataFrame
         df = pd.read_sql(query, engine)
@@ -40,8 +48,8 @@ if __name__ == "__main__":
     # If this script is run directly, display the DataFrame
     df = get_dataframe()
     if df is not None:
-        print(df)
-        print(df.info())
-        print(df.describe(include='all'))
+        print("\n", df)
+        print("\n", df.info())
+        print("\n", df.describe(include='all'))
     else:
-        print("Failed to retrieve data.")
+        print("\nFailed to retrieve data.")
