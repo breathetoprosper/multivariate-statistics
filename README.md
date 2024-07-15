@@ -1,6 +1,7 @@
 This is a full Classification model project done in Python/Xampp
 
 Files: 
+
 #Access.py
 1. It imports an SQL dataset from PHPMyAdmin and gets it into a DataFrame
 2. Does preliminary EDA
