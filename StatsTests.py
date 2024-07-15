@@ -58,6 +58,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
+import joblib  # For saving and loading the model
 
 # Retrieve the DataFrame from Access.py
 df = get_dataframe()
@@ -194,6 +195,10 @@ def pca_test(X_train, X_test, n_components=0.90):
     plt.xticks(range(1, len(pca.explained_variance_ratio_) + 1))
     plt.grid(True)
     plt.show()
+    
+    # Save the scaler and PCA
+    joblib.dump(scaler, 'scaler.pkl')
+    joblib.dump(pca, 'pca.pkl')
 
     return X_train_pca, X_test_pca, pca
 
@@ -204,6 +209,9 @@ def train_and_evaluate_model(X_train_pca, X_test_pca, y_train, y_test):
     y_pred = model.predict(X_test_pca)
     accuracy = accuracy_score(y_test, y_pred)
     classification = classification_report(y_test, y_pred)
+    
+    # Save the trained model
+    joblib.dump(model, 'random_forest_model.pkl')
     
     return accuracy, classification
 
@@ -251,7 +259,7 @@ columns_of_interest = ['Length', 'Left', 'Right', 'Bottom', 'Top', 'Diagonal']
 X = df[columns_of_interest]
 y = df['type']
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 X_train_pca, X_test_pca, pca = pca_test(X_train, X_test)
 
